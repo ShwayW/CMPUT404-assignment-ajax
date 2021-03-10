@@ -68,10 +68,10 @@ function drawCircle(context,entity) {
         lineWidth = 3;
         var x = entity["x"];
         var y = entity["y"];
-        //moveTo(x,y);
         fillStyle = entity["colour"];
         strokeStyle = fillStyle;
-        arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2.0 * Math.PI, false);  
+        arc(x, y, (entity["radius"])?entity["radius"]:50, 0, 2 * Math.PI, false);
+        fill()  
         stroke();                                
     }
 }
@@ -81,7 +81,7 @@ function prepEntity(entity) {
         entity["colour"] = "#FF0000";
     }
     if (!entity["radius"]) {
-        entity["radius"] = 50;
+        entity["radius"] = 25;
     }
     return entity;
 }
@@ -263,7 +263,6 @@ mouse.mousedraggers.push(function(x,y,clicked,e) {
     addEntityWithoutName({'x':x,'y':y,'colour':'pink',
                           'radius':25});
 });
-
 
 function update() {
     //XXX: TODO Get the world from the webservice using a XMLHTTPRequest
