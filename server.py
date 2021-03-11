@@ -35,25 +35,25 @@ app.debug = True
 # }
 
 class World:
-    def __init__(self):
-        self.clear()
-        
-    def update(self, entity, key, value):
-        entry = self.space.get(entity, dict())
-        entry[key] = value
-        self.space[entity] = entry
+	def __init__(self):
+		self.clear()
+	    
+	def update(self, entity, key, value):
+		entry = self.space.get(entity, dict())
+		entry[key] = value
+		self.space[entity] = entry
 
-    def set(self, entity, data):
-        self.space[entity] = data
+	def set(self, entity, data):
+		self.space[entity] = data
 
-    def clear(self):
-        self.space = dict()
+	def clear(self):
+		self.space = dict()
 
-    def get(self, entity):
-        return self.space.get(entity, dict())
-    
-    def world(self):
-        return self.space
+	def get(self, entity):
+		return self.space.get(entity, dict())
+
+	def world(self):
+		return self.space
 
 # you can test your webservice from the commandline
 # curl -v   -H "Content-Type: application/json" -X PUT http://127.0.0.1:5000/entity/X -d '{"x":1,"y":1}' 
@@ -72,6 +72,7 @@ def flask_post_json():
     else:
         return json.loads(request.form.keys()[0])
 
+
 @app.route("/")
 def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
@@ -88,10 +89,11 @@ def world():
     '''you should probably return the world here'''
     return jsonify(myWorld.world())
 
-@app.route("/entity/<entity>")    
+@app.route("/entity/<entity>", methods=['GET'])    
 def get_entity(entity):
-    '''This is the GET version of the entity interface, return a representation of the entity'''
-    return jsonify(myWorld.get(entity))
+	'''This is the GET version of the entity interface, return a representation of the entity'''
+	return jsonify(myWorld.get(entity))
+
 
 @app.route("/clear", methods=['POST','GET'])
 def clear():

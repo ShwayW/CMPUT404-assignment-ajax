@@ -138,7 +138,6 @@ function getPosition(e) {
 	}
 }
 
-
 function addEntity(entity, data) {
     world[entity] = data;
     drawNextFrame(); // (but should we?)
@@ -264,19 +263,26 @@ mouse.mousedraggers.push(function(x,y,clicked,e) {
                           'radius':25});
 });
 
+
 function update() {
     //XXX: TODO Get the world from the webservice using a XMLHTTPRequest
-    sendJSONXMLHTTPRequest("GET", "/world", null, function(new_world) {
-        world = new_world;
+    // get the changed entity name
+    var name = "X"+(counter++)%100;
+    sendJSONXMLHTTPRequest("GET", "/entity/" + name, null, function(update_data) {
+        let entity_data = update_data;
+        world[name] = entity_data;
+        drawNextFrame();
     });
-    drawNextFrame();
     drawFrame();
 }
+sendJSONXMLHTTPRequest("GET", "/world", null, function(new_world) {
+    world = new_world;
+    drawNextFrame();
+});
+drawFrame();
 
 // 30 frames per second
-setInterval( update, 1000/30.0);
-
-
+setInterval(update, 1000/30.0);
 
     </script>
 </body>
